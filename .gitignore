@@ -1,0 +1,20 @@
+# Secrets and sensitive data
+config/ssh/authorized_keys
+config/ssh/id_*
+*.key
+*.pem
+
+# Local build artifacts
+*.rpm
+*.tar.gz
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db

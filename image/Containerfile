@@ -1,0 +1,26 @@
+FROM quay.io/fedora/fedora-bootc:43
+
+# Install packages - no configuration
+RUN dnf install -y \
+    # Virtualization
+    qemu-kvm libvirt virt-install \
+    # Containers
+    podman cockpit cockpit-machines cockpit-podman \
+    # Storage tools
+    fuse fuse3 smartmontools hdparm \
+    # Utilities
+    vim tmux htop \
+    && systemctl enable libvirtd cockpit.socket smartd
+
+# Install snapraid from COPR
+RUN dnf install -y 'dnf-command(copr)' && \
+    dnf copr enable -y aurex/snapraid && \
+    dnf install -y snapraid && \
+    dnf clean all
+
+# Install mergerfs from GitHub
+RUN MERGERFS_VERSION=$(curl -s https://api.github.com/repos/trapexit/mergerfs/releases/latest | grep tag_name | cut -d '"' -f 4) && \
+    curl -L https://github.com/trapexit/mergerfs/releases/latest/download/mergerfs-${MERGERFS_VERSION}.x86_64.rpm -o /tmp/mergerfs.rpm && \
+    dnf install -y /tmp/mergerfs.rpm && \
+    rm /tmp/mergerfs.rpm && \
+    dnf clean all

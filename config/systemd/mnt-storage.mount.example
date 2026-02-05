@@ -1,0 +1,17 @@
+# Example mergerfs mount unit
+# Place your actual mount units here
+# Remove this file and add your own from CoreOS
+
+[Unit]
+Description=MergerFS Storage Pool
+After=mnt-disk1.mount mnt-disk2.mount mnt-disk3.mount
+Requires=mnt-disk1.mount mnt-disk2.mount mnt-disk3.mount
+
+[Mount]
+What=/mnt/disk*
+Where=/mnt/storage
+Type=fuse.mergerfs
+Options=defaults,allow_other,use_ino,cache.files=partial,dropcacheonclose=true,category.create=mfs
+
+[Install]
+WantedBy=multi-user.target
