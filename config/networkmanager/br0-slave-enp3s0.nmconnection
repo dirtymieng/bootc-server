@@ -1,0 +1,8 @@
+[connection]
+id=br0-slave-enp3s0
+type=ethernet
+interface-name=enp3s0
+master=br0
+slave-type=bridge
+
+[bridge-port]

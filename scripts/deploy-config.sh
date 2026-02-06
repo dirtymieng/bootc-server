@@ -38,6 +38,14 @@ if [ -f "${CONFIG_DIR}/ssh/authorized_keys" ]; then
     sudo chmod 700 /root/.ssh
 fi
 
+# Deploy NetworkManager configs
+if [ -d "${CONFIG_DIR}/networkmanager" ] && [ "$(ls -A ${CONFIG_DIR}/networkmanager)" ]; then
+    echo "Deploying NetworkManager connections..."
+    sudo cp ${CONFIG_DIR}/networkmanager/*.nmconnection /etc/NetworkManager/system-connections/
+    sudo chmod 600 /etc/NetworkManager/system-connections/*.nmconnection
+    sudo nmcli connection reload
+fi
+
 # Deploy application configs
 if [ -d "${CONFIG_DIR}/app-configs" ] && [ "$(ls -A ${CONFIG_DIR}/app-configs)" ]; then
     echo "Deploying application configs..."
@@ -57,6 +65,7 @@ echo "Next steps:"
 echo "1. Review deployed files:"
 echo "   - /etc/systemd/system (systemd units)"
 echo "   - /etc/containers/systemd (quadlets)"
+echo "   - /etc/NetworkManager/system-connections (network config)"
 echo "   - /var/lib/media_conf (app configs)"
 echo "2. Enable and start your mount units:"
 echo "   sudo systemctl enable --now mnt-disk1.mount"

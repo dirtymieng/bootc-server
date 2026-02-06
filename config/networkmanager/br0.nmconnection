@@ -1,0 +1,11 @@
+[connection]
+id=br0
+type=bridge
+interface-name=br0
+
+[bridge]
+
+[ipv4]
+dns-search=
+may-fail=false
+method=auto
