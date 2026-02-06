@@ -1,0 +1,20 @@
+[Unit]
+Description=mergerfs service
+Requires=var-mnt-hdd-2TB\x2dWMC300199477.mount var-mnt-hdd-2TB\x2dWMC300210354.mount
+After=var-mnt-hdd-2TB\x2dWMC300199477.mount var-mnt-hdd-2TB\x2dWMC300210354.mount
+
+[Service]
+Type=simple
+KillMode=none
+ExecStart=/usr/bin/mergerfs \
+  -f \
+  -o cache.files=partial \
+  -o dropcacheonclose=true \
+  -o category.create=mfs \
+  /var/mnt/hdd/* \
+  /var/mnt/media
+ExecStop=/bin/fusermount -uz /var/mnt/media
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

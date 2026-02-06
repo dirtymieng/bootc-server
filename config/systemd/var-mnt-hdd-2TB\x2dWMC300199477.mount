@@ -1,0 +1,10 @@
+[Unit]
+Description=Mount local hdd
+
+[Mount]
+What=/dev/sdb1
+Where=/var/mnt/hdd/2TB-WMC300199477
+Type=xfs
+
+[Install]
+WantedBy=default.target

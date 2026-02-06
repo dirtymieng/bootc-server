@@ -1,0 +1,8 @@
+[Unit]
+Description= nvr automount
+
+[Automount]
+Where=/var/mnt/nvr
+
+[Install]
+WantedBy=multi-user.target
