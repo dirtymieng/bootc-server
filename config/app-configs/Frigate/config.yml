@@ -1,53 +1,81 @@
-# Frigate NVR configuration
-# Docs: https://docs.frigate.video/configuration/
-
 mqtt:
   enabled: false
-  # host: mqtt.example.com
-  # user: frigate
-  # password: "{FRIGATE_MQTT_PASSWORD}"
+
+telemetry:
+  version_check: false
+
+ui: {}
+ffmpeg:
+  hwaccel_args: preset-vaapi
+
+go2rtc:
+  streams:
+    driveway:
+      - ffmpeg:rtsp://admin:h[tubD0z3n@10.0.0.80:554/Streaming/Channels/101/
+    driveway_sub:
+      - ffmpeg:rtsp://admin:h[tubD0z3n@10.0.0.80:554/Streaming/Channels/102/
 
 detectors:
   coral:
     type: edgetpu
     device: usb
 
-ffmpeg:
-  hwaccel_args: preset-vaapi
-
-# Define your cameras here
-cameras:
-  # example_camera:
-  #   enabled: true
-  #   ffmpeg:
-  #     inputs:
-  #       - path: rtsp://user:pass@camera-ip:554/stream
-  #         roles:
-  #           - detect
-  #           - record
-  #   detect:
-  #     width: 1920
-  #     height: 1080
-  #     fps: 5
-  #   record:
-  #     enabled: true
-  #     retain:
-  #       days: 7
-  #     events:
-  #       retain:
-  #         default: 14
-
 record:
   enabled: true
   retain:
     days: 7
     mode: motion
-  events:
+  alerts:
     retain:
-      default: 14
-      mode: motion
+      days: 30
+  detections:
+    retain:
+      days: 30
 
 snapshots:
   enabled: true
   retain:
-    default: 14
+    default: 30
+
+cameras:
+  Driveway:
+    enabled: true
+    ffmpeg:
+      inputs:
+        - path: rtsp://127.0.0.1:8554/driveway_sub
+          input_args: preset-rtsp-restream
+          roles:
+            - detect
+        - path: rtsp://127.0.0.1:8554/driveway
+          input_args: preset-rtsp-restream
+          roles:
+            - record
+    objects:
+      track:
+        - person
+        - dog
+        - bicycle
+        - car
+        - motorcycle
+    detect:
+      enabled: true
+      width: 640
+      height: 480
+      fps: 10
+    zones:
+      tarseal:
+        coordinates: 
+          0.001,0.407,0.138,0.245,0.368,0.134,0.626,0.087,0.878,0.153,0.841,0.368,0.869,0.422,0.802,0.617,0.552,0.542,0.127,0.955,0.002,0.817
+        loitering_time: 0
+    motion:
+      mask:
+        - 0.002,0.778,0.063,0.753,0.118,0.744,0.181,0.76,0.257,0.834,0.128,0.965,0.002,0.826
+        - 0,0.408,0,0,0.853,0.003,0.89,0.022,0.874,0.17,0.627,0.095,0.366,0.133,0.146,0.258
+      threshold: 40
+      contour_area: 10
+      improve_contrast: true
+    review:
+      alerts:
+        required_zones: tarseal
+version: 0.15-1
+

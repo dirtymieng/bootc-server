@@ -1,37 +1,37 @@
-# Caddyfile - Reverse proxy configuration
-# Uses Cloudflare DNS challenge for wildcard certs
-# Customize domains and upstream services as needed
+*.meatworks.org {
+	tls {
+		dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+		propagation_delay 2m
+		resolvers 1.1.1.1
+	}
 
-{
-	acme_dns cloudflare {env.CLOUDFLARE_API_TOKEN}
-}
+	@forgejo host forgejo.meatworks.org
+	handle @forgejo {
+		reverse_proxy host.containers.internal:3000
+	}
 
-# Forgejo
-git.example.com {
-	reverse_proxy forgejo:3000
-}
+	@sonarr host sonarr.meatworks.org
+	handle @sonarr {
+		reverse_proxy host.containers.internal:8989
+	}
 
-# Frigate NVR
-frigate.example.com {
-	reverse_proxy frigate:5000
-}
+	@radarr host radarr.meatworks.org
+	handle @radarr {
+		reverse_proxy host.containers.internal:7878
+	}
 
-# Jellyfin
-jellyfin.example.com {
-	reverse_proxy jellyfin:8096
-}
+	@frigate host frigate.meatworks.org
+	handle @frigate {
+		reverse_proxy host.containers.internal:5000
+	}
 
-# Radarr
-radarr.example.com {
-	reverse_proxy radarr:7878
-}
+	@jellyfin host jellyfin.meatworks.org
+	handle @jellyfin {
+		reverse_proxy host.containers.internal:8096
+	}
 
-# Sonarr
-sonarr.example.com {
-	reverse_proxy sonarr:8989
-}
-
-# NzbGet
-nzbget.example.com {
-	reverse_proxy nzbget:6789
+	@nzbget host nzbget.meatworks.org
+	handle @nzbget {
+		reverse_proxy host.containers.internal:6789
+	}
 }
