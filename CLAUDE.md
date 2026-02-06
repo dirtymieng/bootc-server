@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Immutable Fedora 43 bootc server image with mergerfs storage pooling and snapraid parity protection. This is an infrastructure-as-code project, not a software application.
+Immutable Fedora 42 bootc server image with mergerfs storage pooling and snapraid parity protection. This is an infrastructure-as-code project, not a software application.
 
 **Key concept:** The base image (`image/Containerfile`) contains only packages. All configuration is git-managed in `config/` and deployed to `/etc` via scripts.
 
@@ -55,7 +55,7 @@ scripts/deploy-config.sh → Copy config to /etc and /var/lib/media_conf, reload
 
 ## Tech Stack
 
-- **OS:** Fedora 43 bootc (immutable, atomic updates)
+- **OS:** Fedora 42 bootc (immutable, atomic updates)
 - **Containers:** Podman with systemd quadlets
 - **Storage:** mergerfs (pooling), snapraid (parity), FUSE
 - **Virtualization:** qemu-kvm, libvirt
