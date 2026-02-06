@@ -35,10 +35,11 @@ bootc rollback                     # Rollback to previous deployment
 image/Containerfile     → Base image: packages only, no config
 config/systemd/         → Systemd mount units (.mount) and services
 config/containers/      → Podman quadlets (.container files)
+config/app-configs/     → Application configs (Caddy, Frigate, etc.) → /var/lib/media_conf/
 config/snapraid/        → snapraid.conf
 config/ssh/             → authorized_keys for root
 scripts/build.sh        → Build OCI image with podman
-scripts/deploy-config.sh → Copy config to /etc, reload systemd
+scripts/deploy-config.sh → Copy config to /etc and /var/lib/media_conf, reload systemd
 ```
 
 **Deployment flow:**

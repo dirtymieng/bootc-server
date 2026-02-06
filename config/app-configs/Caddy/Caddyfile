@@ -1,0 +1,37 @@
+# Caddyfile - Reverse proxy configuration
+# Uses Cloudflare DNS challenge for wildcard certs
+# Customize domains and upstream services as needed
+
+{
+	acme_dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+}
+
+# Forgejo
+git.example.com {
+	reverse_proxy forgejo:3000
+}
+
+# Frigate NVR
+frigate.example.com {
+	reverse_proxy frigate:5000
+}
+
+# Jellyfin
+jellyfin.example.com {
+	reverse_proxy jellyfin:8096
+}
+
+# Radarr
+radarr.example.com {
+	reverse_proxy radarr:7878
+}
+
+# Sonarr
+sonarr.example.com {
+	reverse_proxy sonarr:8989
+}
+
+# NzbGet
+nzbget.example.com {
+	reverse_proxy nzbget:6789
+}

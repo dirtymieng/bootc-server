@@ -1,0 +1,53 @@
+# Frigate NVR configuration
+# Docs: https://docs.frigate.video/configuration/
+
+mqtt:
+  enabled: false
+  # host: mqtt.example.com
+  # user: frigate
+  # password: "{FRIGATE_MQTT_PASSWORD}"
+
+detectors:
+  coral:
+    type: edgetpu
+    device: usb
+
+ffmpeg:
+  hwaccel_args: preset-vaapi
+
+# Define your cameras here
+cameras:
+  # example_camera:
+  #   enabled: true
+  #   ffmpeg:
+  #     inputs:
+  #       - path: rtsp://user:pass@camera-ip:554/stream
+  #         roles:
+  #           - detect
+  #           - record
+  #   detect:
+  #     width: 1920
+  #     height: 1080
+  #     fps: 5
+  #   record:
+  #     enabled: true
+  #     retain:
+  #       days: 7
+  #     events:
+  #       retain:
+  #         default: 14
+
+record:
+  enabled: true
+  retain:
+    days: 7
+    mode: motion
+  events:
+    retain:
+      default: 14
+      mode: motion
+
+snapshots:
+  enabled: true
+  retain:
+    default: 14
