@@ -1,0 +1,21 @@
+[Unit]
+Description=Forgejo
+After=network-online.target rproxy.network
+Wants=network-online.target
+Requires=rproxy.network
+
+[Container]
+ContainerName=forgejo
+Environment=USER_UID=1001
+Environment=USER_GID=1001
+Image=codeberg.org/forgejo/forgejo:10
+PublishPort=3000:3000
+PublishPort=222:22
+Volume=/var/lib/media_conf/Forgejo:/data:Z
+Network=rproxy.network
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

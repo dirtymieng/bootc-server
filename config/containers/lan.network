@@ -1,0 +1,11 @@
+[Unit]
+Description=lan network
+
+[Network]
+NetworkName=lan
+IPAMDriver=dhcp
+Driver=macvlan
+Options=parent=br0
+Subnet=10.0.0.0/24
+IPRange=10.0.0.50-10.0.0.99
+Gateway=10.0.0.1

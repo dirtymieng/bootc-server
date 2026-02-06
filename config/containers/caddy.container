@@ -1,0 +1,21 @@
+[Unit]
+Description=Caddy
+After=network-online.target rproxy.network
+Wants=network-online.target
+Requires=rproxy.network
+
+[Container]
+ContainerName=caddy
+Image=10.0.10.10:3000/dirtymieng/caddy-cf:latest
+Secret=cf-api-token,type=env,target=CLOUDFLARE_API_TOKEN
+Network=rproxy.network
+PublishPort=80:80
+PublishPort=443:443
+Volume=/var/lib/media_conf/Caddy/config:/caddy:Z
+Volume=/var/lib/media_conf/Caddy/data:/data:Z
+Volume=/var/lib/media_conf/Caddy/Caddyfile:/etc/caddy/Caddyfile:Z
+Environment=CLOUDFLARE_EMAIL=m3atworks@gmail.com
+Environment=ACME_AGREE=true
+
+[Install]
+WantedBy=default.target
