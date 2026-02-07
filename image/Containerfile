@@ -1,4 +1,4 @@
-FROM quay.io/fedora/fedora-bootc:42
+FROM quay.io/fedora/fedora-bootc:43
 
 # Install packages - no configuration
 RUN dnf install -y \
@@ -21,7 +21,7 @@ RUN dnf install -y \
 
 # Install mergerfs from GitHub
 RUN dnf install -y jq && \
-    RPM_URL=$(curl -s https://api.github.com/repos/trapexit/mergerfs/releases/latest | jq -r '.assets[] | select(.name | test("fc42.x86_64.rpm$")) | .browser_download_url') && \
+    RPM_URL=$(curl -s https://api.github.com/repos/trapexit/mergerfs/releases/latest | jq -r '.assets[] | select(.name | test("fc43.x86_64.rpm$")) | .browser_download_url') && \
     dnf install -y "${RPM_URL}" && \
     dnf remove -y jq && dnf clean all
 
