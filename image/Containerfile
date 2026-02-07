@@ -5,18 +5,31 @@ RUN dnf install -y \
     # Virtualization
     qemu-kvm libvirt virt-install \
     # Containers
-    podman cockpit cockpit-machines cockpit-podman \
+    podman cockpit cockpit-machines cockpit-podman cockpit-storaged \
+    distrobox \
     # Storage tools
-    fuse fuse3 smartmontools hdparm \
+    fuse fuse3 smartmontools hdparm snapraid duperemove \
+    # Samba
+    samba \
+    # Backup
+    restic rclone \
+    # Hardware
+    pciutils usbutils \
     # Utilities
-    vim tmux htop \
-    && systemctl enable libvirtd cockpit.socket smartd
-
-# Install snapraid (available in Fedora repos)
-RUN dnf install -y snapraid && dnf clean all
+    vim tmux btop zsh stow man-db \
+    && systemctl enable libvirtd cockpit.socket smartd smb
 
 # Install mergerfs from GitHub
 RUN dnf install -y jq && \
     RPM_URL=$(curl -s https://api.github.com/repos/trapexit/mergerfs/releases/latest | jq -r '.assets[] | select(.name | test("fc42.x86_64.rpm$")) | .browser_download_url') && \
     dnf install -y "${RPM_URL}" && \
     dnf remove -y jq && dnf clean all
+
+# Create user with SSH key and initial password
+RUN useradd -m -G wheel dirtymieng && \
+    echo 'dirtymieng:changeme' | chpasswd && \
+    mkdir -p /home/dirtymieng/.ssh && \
+    echo 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPc84Bo01ZkVHxZiUlqlTbP8NwjWD5Dn5Wl+PvJeXJn7 dirtymieng@btw' > /home/dirtymieng/.ssh/authorized_keys && \
+    chmod 700 /home/dirtymieng/.ssh && \
+    chmod 600 /home/dirtymieng/.ssh/authorized_keys && \
+    chown -R dirtymieng:dirtymieng /home/dirtymieng/.ssh

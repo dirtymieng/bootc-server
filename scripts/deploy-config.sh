@@ -29,6 +29,13 @@ if [ -f "${CONFIG_DIR}/snapraid/snapraid.conf" ]; then
     sudo cp ${CONFIG_DIR}/snapraid/snapraid.conf /etc/snapraid.conf
 fi
 
+# Deploy samba config
+if [ -f "${CONFIG_DIR}/samba/smb.conf" ]; then
+    echo "Deploying samba configuration..."
+    sudo mkdir -p /etc/samba
+    sudo cp ${CONFIG_DIR}/samba/smb.conf /etc/samba/smb.conf
+fi
+
 # Deploy SSH keys
 if [ -f "${CONFIG_DIR}/ssh/authorized_keys" ]; then
     echo "Deploying SSH authorized keys..."

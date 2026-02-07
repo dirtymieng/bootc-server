@@ -5,8 +5,8 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 IMAGE_DIR="${SCRIPT_DIR}/../image"
-IMAGE_NAME="${IMAGE_NAME:-my-server:latest}"
-REGISTRY="${REGISTRY:-}"
+IMAGE_NAME="${IMAGE_NAME:-bootc-server:latest}"
+REGISTRY="${REGISTRY:-forgejo.meatworks.org/dirtymieng}"
 
 cd "${IMAGE_DIR}"
 
