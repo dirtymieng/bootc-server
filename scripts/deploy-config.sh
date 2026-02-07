@@ -8,6 +8,11 @@ CONFIG_DIR="${REPO_ROOT}/config"
 
 echo "Deploying configuration from ${CONFIG_DIR}"
 
+# Create mount point directories
+echo "Creating mount point directories..."
+sudo mkdir -p /var/mnt/hdd /var/mnt/nvr /var/mnt/media
+sudo mkdir -p /var/lib/media_conf
+
 # Deploy systemd units
 if [ -d "${CONFIG_DIR}/systemd" ] && [ "$(ls -A ${CONFIG_DIR}/systemd)" ]; then
     echo "Deploying systemd units..."
