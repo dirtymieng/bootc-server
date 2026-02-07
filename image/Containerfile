@@ -16,7 +16,7 @@ RUN dnf install -y \
     # Hardware
     pciutils usbutils \
     # Utilities
-    vim tmux btop zsh stow man-db \
+    vim tmux btop zsh stow man-db git \
     && systemctl enable libvirtd cockpit.socket smartd smb
 
 # Install mergerfs from GitHub

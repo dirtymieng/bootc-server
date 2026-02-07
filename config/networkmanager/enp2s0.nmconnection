@@ -1,0 +1,16 @@
+[connection]
+id=enp2s0
+type=ethernet
+autoconnect-priority=-999
+interface-name=enp2s0
+
+[ethernet]
+
+[ipv4]
+method=auto
+
+[ipv6]
+addr-gen-mode=default
+method=disabled
+
+[proxy]

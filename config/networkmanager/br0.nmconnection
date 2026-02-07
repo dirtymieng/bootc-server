@@ -1,11 +1,19 @@
 [connection]
 id=br0
 type=bridge
+autoconnect-ports=1
 interface-name=br0
 
+[ethernet]
+
 [bridge]
+stp=false
 
 [ipv4]
-dns-search=
-may-fail=false
 method=auto
+
+[ipv6]
+addr-gen-mode=default
+method=auto
+
+[proxy]
